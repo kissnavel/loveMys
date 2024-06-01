@@ -144,21 +144,21 @@ export default class MysApi {
     const cn = {
       app_version: '2.40.1',
       User_Agent: `Mozilla/5.0 (Linux; Android 12; ${this.device}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBS/2.40.1`,
-      client_type: 5,
+      client_type: '5',
       Origin: 'https://webstatic.mihoyo.com',
       X_Requested_With: 'com.mihoyo.hyperion',
-      Referer: 'https://webstatic.mihoyo.com'
+      Referer: 'https://webstatic.mihoyo.com/'
     }
     const os = {
-      app_version: '2.9.0',
-      User_Agent: `Mozilla/5.0 (Linux; Android 12; ${this.device}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
+      app_version: '2.55.0',
+      User_Agent: 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBSOversea/2.55.0',
       client_type: '2',
-      Origin: 'https://webstatic-sea.hoyolab.com',
+      Origin: 'https://act.hoyolab.com',
       X_Requested_With: 'com.mihoyo.hoyolab',
-      Referer: 'https://webstatic-sea.hoyolab.com'
+      Referer: 'https://act.hoyolab.com/'
     }
     let client
-    if (this.server.startsWith('os')) {
+    if (/os_|official/.test(this.server)) {
       client = os
     } else {
       client = cn
@@ -218,7 +218,7 @@ export default class MysApi {
     if (!proxyAddress) return null
     if (proxyAddress === 'http://0.0.0.0:0') return null
 
-    if (!this.server.startsWith('os')) return null
+    if (!/os_|official/.test(this.server)) return null
 
     if (HttpsProxyAgent === '') {
       HttpsProxyAgent = await import('https-proxy-agent').catch((err) => {
@@ -234,4 +234,14 @@ export default class MysApi {
 
     return null
   }
+}
+
+export function randomRange() {
+  let randomStr = ''
+  let charStr = 'abcdef0123456789'
+  for (let i = 0; i < 64; i++) {
+    let index = Math.round(Math.random() * (charStr.length - 1))
+    randomStr += charStr.substring(index, index + 1)
+  }
+  return randomStr
 }
