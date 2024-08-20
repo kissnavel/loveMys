@@ -39,19 +39,22 @@ export default class LoveMys {
 
   async geetest (e, data, retcode = 1034) {
     let res
-    let { uid, cookie, game = 'gs', isSr } = data
+    let { uid, cookie, game = 'gs', isSr, isZzz } = data
     if (isSr) game = 'sr'
+    if (isZzz) game = 'zzz'
     let vali = new MysApi(uid, cookie, game, data.option || {}, data._device || '')
 
     try {
       vali._device_fp = data?._device_fp || await vali.getData('getFp')
-      let headers = {}; let app_key = ''
+      let headers = {}
       if (game === 'sr') {
-        app_key = 'hkrpg_game_record'
         headers['x-rpc-challenge_game'] = '6'
       }
+      if (game === 'zzz') {
+        headers['x-rpc-challenge_game'] = '8'
+      }
 
-      res = await vali.getData((retcode === 10035 && game === 'sr') ? 'createGeetest' : 'createVerification', { headers, app_key })
+      res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers })
       if (!res || res?.retcode !== 0) {
         return { data: null, message: '未知错误，可能为cookie失效', retcode: res?.retcode || 1034 }
       }
@@ -59,7 +62,7 @@ export default class LoveMys {
       let GtestType = Cfg.api.GtestType
       if ([2, 1].includes(GtestType)) res = await vali.getData('validate', res?.data)
       if (!res?.data?.validate && [2, 0].includes(GtestType)) {
-        if (GtestType === 2) res = await vali.getData((retcode === 10035 && game === 'sr') ? 'createGeetest' : 'createVerification', { headers, app_key })
+        if (GtestType === 2) res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers })
         res = await this.Manual_geetest(e, res?.data)
       }
 
@@ -67,9 +70,8 @@ export default class LoveMys {
         return { data: null, message: '验证码失败', retcode: 1034 }
       }
 
-      res = await vali.getData((retcode === 10035 && game === 'sr') ? 'verifyGeetest' : 'verifyVerification', {
+      res = await vali.getData(retcode === 10035 ? 'verifyGeetest' : 'verifyVerification', {
         ...res.data,
-        app_key,
         headers
       })
 
