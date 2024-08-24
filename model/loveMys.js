@@ -61,12 +61,14 @@ export default class LoveMys {
 
       let GtestType = Cfg.api.GtestType
       if ([2, 1].includes(GtestType)) res = await vali.getData('validate', res?.data)
+      if (res?.resultid)
+        res = await vali.getData('results', res.resultid)
       if (!res?.data?.validate && [2, 0].includes(GtestType)) {
         if (GtestType === 2) res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers })
         res = await this.Manual_geetest(e, res?.data)
       }
 
-      if (!res?.data?.validate && !res?.data?.geetest_validate) {
+      if (!res?.data?.validate) {
         return { data: null, message: '验证码失败', retcode: 1034 }
       }
 

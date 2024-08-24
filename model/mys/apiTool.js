@@ -53,7 +53,12 @@ export default class apiTool {
       },
       validate: {
         url: `${Cfg.api.api}`,
-        query: `${Cfg.api.token ? `token=${Cfg.api.token}` : ''}${Cfg.api.query || ''}&gt=${data.gt}&challenge=${data.challenge}`,
+        query: `${Cfg.api.key}&${Cfg.api.query}&gt=${data.gt}&challenge=${data.challenge}`,
+        types: 'noheader'
+      },
+      results: {
+        url: `${Cfg.api.resapi}`,
+        query: `${Cfg.api.key}&resultid=${data.resultid}`,
         types: 'noheader'
       },
       /** fp参数用于减少验证码 */
