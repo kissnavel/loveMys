@@ -1,3 +1,4 @@
+import common from '../../../lib/common/common.js'
 import MysApi from './mys/mysApi.js'
 import fetch from 'node-fetch'
 import Cfg from './Cfg.js'
@@ -62,6 +63,7 @@ export default class LoveMys {
       let GtestType = Cfg.api.GtestType
       if ([2, 1].includes(GtestType)) res = await vali.getData('validate', res?.data)
       if (res?.resultid) {
+        await common.sleep(5000)
         res = await vali.getData('results', res?.resultid)
       }
       if (!res?.data?.validate && [2, 0].includes(GtestType)) {

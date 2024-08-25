@@ -4,12 +4,12 @@
 在云崽根目录下打开终端，运行：
 * 使用Gitee
 ``` bash
-git clone https://gitee.com/bbaban/loveMys.git ./plugins/loveMys-plugin/
+git clone https://gitee.com/kissnavel/loveMys.git ./plugins/loveMys-plugin/
 pnpm install --filter=loveMys-plugin
 ```
 * 使用Github
 ``` bash
-git clone https://github.com/babanbang/loveMys.git ./plugins/loveMys-plugin/
+git clone https://github.com/kissnavel/loveMys.git ./plugins/loveMys-plugin/
 pnpm install --filter=loveMys-plugin
 ```
 > 注：根据你的网络情况选择不同的仓库地址，在国内使用Gitee相对稳定
