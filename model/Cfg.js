@@ -30,6 +30,26 @@ class Cfg {
     return { ...this.getdefSet(app), ...this.getYaml(app, 'config') }
   }
 
+  /** 设置配置 */
+  setConfig (app, obj) {
+    // 先获取默认配置
+    const defSet = this.getdefSet(app)
+    // 再获取用户配置
+    const config = this.getConfig(app)
+    return this.setYaml(app, 'config', { ...defSet, ...config, ...obj })
+  }
+
+  /** 将对象写入YAML文件 */
+  setYaml(app, type, Object) {
+    let file = this.getFilePath(app, type);
+    try {
+      fs.writeFileSync(file, YAML.stringify(Object), 'utf8');
+    } catch (error) {
+      logger.error(`[${app}] 写入失败 ${error}`);
+      return false;
+    }
+  }
+
   /**
    * 获取配置yaml
    * @param app 配置文件名称
