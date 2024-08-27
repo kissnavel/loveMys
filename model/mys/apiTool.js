@@ -3,11 +3,10 @@ import crypto from 'crypto'
 
 export default class apiTool {
   /**
-   * @param uid 用户uid
    * @param server 区服
    * @param game 游戏
    */
-  constructor (server) {
+  constructor (server, game) {
     this.server = server
     this.uuid = crypto.randomUUID()
     this.app_key = game == 'zzz' ? 'game_record_zzz' : game == 'sr' ? 'hkrpg_game_record' : ''
