@@ -4,12 +4,10 @@ import crypto from 'crypto'
 export default class apiTool {
   /**
    * @param server 区服
-   * @param game 游戏
    */
-  constructor (server, game) {
+  constructor (server) {
     this.server = server
     this.uuid = crypto.randomUUID()
-    this.app_key = game == 'zzz' ? 'game_record_zzz' : game == 'sr' ? 'hkrpg_game_record' : ''
   }
 
   getUrlMap = (data = {}) => {
@@ -27,7 +25,7 @@ export default class apiTool {
     return {
       createGeetest: {
         url: `${host}event/toolcomsrv/risk/createGeetest`,
-        query: `is_high=true&app_key=${this.app_key}`
+        query: `is_high=true&app_key=${data.app_key}`
       },
       verifyGeetest: {
         url: `${host}event/toolcomsrv/risk/verifyGeetest`,
@@ -35,7 +33,7 @@ export default class apiTool {
           geetest_challenge: data.challenge,
           geetest_validate: data.validate,
           geetest_seccode: `${data.validate}|jordan`,
-          app_key: this.app_key
+          app_key: data.app_key
         }
       },
       createVerification: {

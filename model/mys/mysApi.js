@@ -18,7 +18,7 @@ export default class MysApi {
     this.cookie = cookie
     this.game = game
     this.server = this.getServer(this.uid, this.game)
-    this.apiTool = new apiTool(this.server, this.game)
+    this.apiTool = new apiTool(this.server)
     /** 5分钟缓存 */
     this.cacheCd = 300
 
