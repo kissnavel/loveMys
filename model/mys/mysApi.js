@@ -39,14 +39,14 @@ export default class MysApi {
     let urlMap = this.apiTool.getUrlMap({ ...data, deviceId: this.device_id.toUpperCase() })
     if (!urlMap[type]) return false
 
-    let { url, query = '', body = '', types = '' } = urlMap[type]
+    let { url, query = '', body = '', config = '', types = '' } = urlMap[type]
 
     if (query) url += `?${query}`
     if (body) body = JSON.stringify(body)
 
     let headers = this.getHeaders(types, query, body)
 
-    return { url, headers, body, types }
+    return { url, headers, body, config, types }
   }
 
   getServer () {
@@ -85,7 +85,7 @@ export default class MysApi {
     }
     if (type === 'getFp' && !data?.Getfp) return this._device_fp
 
-    let { url, headers, body, types } = this.getUrl(type, data)
+    let { url, headers, body, config, types } = this.getUrl(type, data)
 
     if (!url) return false
 
@@ -117,6 +117,17 @@ export default class MysApi {
     }
     let response = {}
     let start = Date.now()
+
+    if (type == 'recognize' || type == 'results') {
+      param = {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: config
+      }
+    }
+
     try {
       response = await fetch(url, param)
     } catch (error) {

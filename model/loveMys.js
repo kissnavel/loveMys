@@ -63,10 +63,17 @@ export default class LoveMys {
       }
 
       let GtestType = Cfg.api.GtestType
-      if ([2, 1].includes(GtestType)) res = await vali.getData('validate', res?.data)
+      if ([2, 1].includes(GtestType)) res = await vali.getData('recognize', res?.data)
       if (res?.resultid) {
+        let results = res
+        let retry = 0
         await common.sleep(5000)
-        res = await vali.getData('results', res?.resultid)
+        res = await vali.getData('results', results)
+        while ((res?.status == 2) && retry < 5) {
+          await common.sleep(5000)
+          res = await vali.getData("results", results)
+          retry++
+        }
       }
       if (!res?.data?.validate && [2, 0].includes(GtestType)) {
         if (GtestType === 2) res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })

@@ -48,14 +48,14 @@ export default class apiTool {
           geetest_seccode: `${data.validate}|jordan`
         }
       },
-      validate: {
+      recognize: {
         url: `${Cfg.api.api}`,
-        query: `${Cfg.api.key}&${Cfg.api.query}&gt=${data.gt}&challenge=${data.challenge}`,
+        config: `${Cfg.api.key}&${Cfg.api.query}&gt=${data.gt}&challenge=${data.challenge}`,
         types: 'noheader'
       },
       results: {
         url: `${Cfg.api.resapi}`,
-        query: `${Cfg.api.key}&resultid=${data.resultid}`,
+        config: `${Cfg.api.key}&resultid=${data.resultid}`,
         types: 'noheader'
       },
       /** fp参数用于减少验证码 */
