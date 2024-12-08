@@ -47,7 +47,7 @@ export default class LoveMys {
 
     try {
       vali._device_fp = data?._device_fp || await vali.getData('getFp')
-      let headers = {}
+      let headers = { 'x-rpc-challenge_game': '2' }
       let app_key = ''
       if (game === 'sr') {
         headers['x-rpc-challenge_game'] = '6'
@@ -72,7 +72,7 @@ export default class LoveMys {
         res = await vali.getData('results', results)
         while ((res?.status == 2) && retry < 5) {
           await common.sleep(5000)
-          res = await vali.getData("results", results)
+          res = await vali.getData('results', results)
           retry++
         }
       }
