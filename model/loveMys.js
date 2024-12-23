@@ -47,16 +47,9 @@ export default class LoveMys {
 
     try {
       vali._device_fp = data?._device_fp || await vali.getData('getFp')
-      let headers = { 'x-rpc-challenge_game': '2' }
-      let app_key = ''
-      if (game === 'sr') {
-        headers['x-rpc-challenge_game'] = '6'
-        app_key = 'hkrpg_game_record'
-      }
-      if (game === 'zzz') {
-        headers['x-rpc-challenge_game'] = '8'
-        app_key = 'game_record_zzz'
-      }
+      let challenge_game = game === 'zzz' ? '8' : game === 'sr' ? '6' : '2'
+      let headers = { 'x-rpc-challenge_game': challenge_game }
+      let app_key = game === 'zzz' ? 'game_record_zzz' : game === 'sr' ? 'hkrpg_game_record' : ''
 
       res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })
       if (!res || res?.retcode !== 0) {
