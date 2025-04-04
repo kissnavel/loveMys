@@ -47,8 +47,11 @@ export default class LoveMys {
     try {
       vali._device_fp = data?._device_fp || await vali.getData('getFp')
       let challenge_game = game === 'zzz' ? '8' : game === 'sr' ? '6' : '2'
-      let headers = { 'x-rpc-challenge_game': challenge_game }
       let app_key = game === 'zzz' ? 'game_record_zzz' : game === 'sr' ? 'hkrpg_game_record' : ''
+      let q = [1034, 5003].includes(Number(retcode)) ? 'is_high=true' : `is_high=true&app_key=${app_key}`
+      let headers = vali.getHeaders()
+      headers['x-rpc-challenge_game'] = challenge_game
+      headers['DS'] = vali.getDs(q, '')
 
       res = await vali.getData(![1034, 5003].includes(Number(retcode)) ? 'createGeetest' : 'createVerification', { headers, app_key })
       if (!res || res?.retcode !== 0) {
@@ -76,6 +79,20 @@ export default class LoveMys {
       if (!res?.data?.validate) {
         return { data: null, message: '验证码失败', retcode: 1034 }
       }
+
+      let challenge = res?.data?.challenge
+      let validate = res?.data?.validate
+      let b = {
+        geetest_challenge: challenge,
+        geetest_validate: validate,
+        ...([1034, 5003].includes(Number(retcode)) ? {
+          geetest_seccode: `${validate}|jordan`
+        } : {
+          geetest_seccode: `${validate}|jordan`,
+          app_key: app_key
+        })
+      }
+      headers['DS'] = vali.getDs('', b)
 
       res = await vali.getData(![1034, 5003].includes(Number(retcode)) ? 'verifyGeetest' : 'verifyVerification', {
         ...res.data,
