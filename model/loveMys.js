@@ -41,6 +41,7 @@ export default class LoveMys {
   async geetest (e, data, retcode) {
     let res
     let { uid, cookie, game } = data
+    if (e?.game) game = e?.game
     let vali = new MysApi(uid, cookie, game, data.option || {}, data._device || '')
 
     try {
