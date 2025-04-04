@@ -38,11 +38,9 @@ export default class LoveMys {
     return res
   }
 
-  async geetest (e, data, retcode = 1034) {
+  async geetest (e, data, retcode) {
     let res
-    let { uid, cookie, game = 'gs', isSr, isZzz } = data
-    if (isSr) game === 'sr'
-    if (isZzz) game === 'zzz'
+    let { uid, cookie, game } = data
     let vali = new MysApi(uid, cookie, game, data.option || {}, data._device || '')
 
     try {
@@ -51,7 +49,7 @@ export default class LoveMys {
       let headers = { 'x-rpc-challenge_game': challenge_game }
       let app_key = game === 'zzz' ? 'game_record_zzz' : game === 'sr' ? 'hkrpg_game_record' : ''
 
-      res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })
+      res = await vali.getData(![1034, 5003].includes(Number(retcode)) ? 'createGeetest' : 'createVerification', { headers, app_key })
       if (!res || res?.retcode !== 0) {
         return { data: null, message: '未知错误，可能为cookie失效', retcode: res?.retcode || 1034 }
       }
@@ -70,7 +68,7 @@ export default class LoveMys {
         }
       }
       if (!res?.data?.validate && [2, 0].includes(GtestType)) {
-        if (GtestType === 2) res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })
+        if (GtestType === 2) res = await vali.getData(![1034, 5003].includes(Number(retcode)) ? 'createGeetest' : 'createVerification', { headers, app_key })
         res = await this.Manual_geetest(e, res?.data)
       }
 
@@ -78,7 +76,7 @@ export default class LoveMys {
         return { data: null, message: '验证码失败', retcode: 1034 }
       }
 
-      res = await vali.getData(retcode === 10035 ? 'verifyGeetest' : 'verifyVerification', {
+      res = await vali.getData(![1034, 5003].includes(Number(retcode)) ? 'verifyGeetest' : 'verifyVerification', {
         ...res.data,
         headers,
         app_key
