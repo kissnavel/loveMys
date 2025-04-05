@@ -322,6 +322,14 @@ export default class MysApi {
     return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4())
   }
 
+  randomString(length = 32) {
+    let randomStr = ''
+    for (let i = 0; i < length; i++) {
+      randomStr += _.sample('abcdefghijklmnopqrstuvwxyz0123456789')
+    }
+    return randomStr
+  }
+
   cacheKey (type, data) {
     return 'Yz:genshin:mys:cache:' + md5(this.uid + type + JSON.stringify(data))
   }
