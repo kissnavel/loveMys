@@ -45,8 +45,7 @@ export default class LoveMys {
     let vali = new MysApi(uid, cookie, game, data.option || {}, data._device || '')
 
     try {
-      let deviceFp = await vali.getData('getFp')
-      vali._device_fp = data?._device_fp || deviceFp?.data?.device_fp
+      vali._device_fp = data?._device_fp || await vali.getData('getFp')
       let challenge_game = game === 'zzz' ? '8' : game === 'sr' ? '6' : '2'
       let app_key = game === 'zzz' ? 'game_record_zzz' : game === 'sr' ? 'hkrpg_game_record' : ''
       let q = [1034, 5003].includes(Number(retcode)) ? 'is_high=true' : `is_high=true&app_key=${app_key}`
