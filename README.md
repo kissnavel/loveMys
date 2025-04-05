@@ -11,4 +11,6 @@ pnpm install --filter=loveMys-plugin
 重启后在 config/api.yaml中填入api、resapi、key、query
 
 ## 说明
-<a href="https://github.com/babanbang/loveMys">原仓库</a>，本仓库修改了部分功能，已添加国际服支持。
+1、<a href="https://github.com/babanbang/loveMys">原仓库</a>，本仓库修改了部分功能，已添加国际服支持。
+
+2、绑定设备需配合<a href="https://github.com/kissnavel/genshin">genshin</a>使用。
