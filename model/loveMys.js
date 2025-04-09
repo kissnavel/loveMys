@@ -62,7 +62,7 @@ export default class LoveMys {
         let retry = 0
         await common.sleep(5000)
         res = await vali.getData('results', results)
-        while ((res?.status == 2) && retry < 5) {
+        while ((res?.status == 2) && retry < 10) {
           await common.sleep(5000)
           res = await vali.getData('results', results)
           retry++
