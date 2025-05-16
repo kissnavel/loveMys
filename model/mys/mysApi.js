@@ -67,14 +67,14 @@ export default class MysApi {
         headers['x-rpc-device_model'] = modelName
         headers['x-rpc-csm_source'] = 'myself'
         // 国际服不需要绑定设备，故写入的'User-Agent'为国服
-        headers['User-Agent'] = `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBS/2.73.1`
+        headers['User-Agent'] = `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/100.0.4896.88 Mobile Safari/537.36 miHoYoBBS/2.73.1`
       } catch (error) {
         logger.error(`[lovemys]设备信息解析失败：${error.message}`)
       }
     } else {
       try {
-        headers['x-rpc-device_name'] = 'Sony J9110'
-        headers['x-rpc-device_model'] = 'J9110'
+        headers['x-rpc-device_name'] = 'Sony XQ-AT52'
+        headers['x-rpc-device_model'] = 'XQ-AT52'
         headers['x-rpc-csm_source'] = 'myself'
       } catch (error) {
         logger.error(`[lovemys]设备信息解析失败：${error.message}`)
@@ -83,7 +83,7 @@ export default class MysApi {
 
     if (type == 'deviceLogin' || type == 'saveDevice') {
       try {
-        headers['x-rpc-sys_version'] = '11'
+        headers['x-rpc-sys_version'] = '12'
         headers['x-rpc-client_type'] = '2'
         headers['x-rpc-channel'] = 'miyousheluodi'
         headers['x-rpc-csm_source'] = 'home'
@@ -263,7 +263,7 @@ export default class MysApi {
 
     const cn = {
       app_version: '2.73.1',
-      User_Agent: 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBS/2.73.1',
+      User_Agent: 'Mozilla/5.0 (Linux; Android 12; XQ-AT52 Build/58.2.A.7.93; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/100.0.4896.88 Mobile Safari/537.36 miHoYoBBS/2.73.1',
       client_type: '5',
       Origin: 'https://act.mihoyo.com',
       X_Requested_With: 'com.mihoyo.hyperion',
@@ -271,7 +271,7 @@ export default class MysApi {
     }
     const os = {
       app_version: '2.57.1',
-      User_Agent: 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBSOversea/2.57.1',
+      User_Agent: 'Mozilla/5.0 (Linux; Android 12; XQ-AT52 Build/58.2.A.7.93; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/100.0.4896.88 Mobile Safari/537.36 miHoYoBBSOversea/2.57.1',
       client_type: '2',
       Origin: 'https://act.hoyolab.com',
       X_Requested_With: 'com.mihoyo.hoyolab',
