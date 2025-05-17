@@ -20,7 +20,6 @@ export default class apiTool {
     const board = data?.board ?? 'kona'
     const deviceBrand = deviceInfo.split('/')[0]
     const deviceDisplay = deviceInfo.split('/')[3]
-    let Bbs_api = 'https://bbs-api.miyoushe.com/'
     let host, hostRecord, hostPublicData
     if (/cn_|_cn/.test(this.server)) {
       host = 'https://api-takumi.mihoyo.com/'
@@ -67,28 +66,6 @@ export default class apiTool {
         url: `${Cfg.api.resapi}`,
         config: `${Cfg.api.key}&resultid=${data.resultid}`,
         types: 'noheader'
-      },
-      deviceLogin: {
-        url: `${Bbs_api}apihub/api/deviceLogin`,
-        body: {
-          app_version: '2.73.1',
-          device_id: data.deviceId,
-          device_name: `${deviceBrand}${modelName}`,
-          os_version: '33',
-          platform: 'Android',
-          registration_id: this.generateSeed(19)
-        }
-      },
-      saveDevice: {
-        url: `${Bbs_api}apihub/api/saveDevice`,
-        body: {
-          app_version: '2.73.1',
-          device_id: data.deviceId,
-          device_name: `${deviceBrand}${modelName}`,
-          os_version: '33',
-          platform: 'Android',
-          registration_id: this.generateSeed(19)
-        }
       },
       /** fp参数用于减少验证码 */
       ...(/cn_|_cn/.test(this.server) ? {
