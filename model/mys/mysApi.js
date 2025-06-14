@@ -114,7 +114,7 @@ export default class MysApi {
           return isSr ? 'prod_official_cht' : 'os_cht'// 港澳台服
       }
     }
-    return isWd ? 'cn_prod_gf01' : (isZzz || isSr) ? 'prod_gf_cn' : 'cn_gf01'// 官服
+    return (isZzz || isSr) ? 'prod_gf_cn' : 'cn_gf01'// 官服
   }
 
   async getData (type, data = { headers: {} }, cached = false) {
