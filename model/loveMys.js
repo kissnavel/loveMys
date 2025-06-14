@@ -1,4 +1,5 @@
 import common from '../../../lib/common/common.js'
+import getDeviceFp from './getDeviceFp.js'
 import MysApi from './mys/mysApi.js'
 import fetch from 'node-fetch'
 import Cfg from './Cfg.js'
@@ -45,9 +46,9 @@ export default class LoveMys {
     let vali = new MysApi(uid, cookie, game, data.option || {}, data._device || '')
 
     try {
-      vali._device_fp = data?._device_fp || await vali.getData('getFp')
       let challenge_game = game === 'zzz' ? '8' : game === 'sr' ? '6' : '2'
-      let headers = { 'x-rpc-challenge_game': challenge_game }
+      let { deviceFp } = await getDeviceFp.Fp(uid, cookie, game)
+      let headers = { 'x-rpc-device_fp': deviceFp, 'x-rpc-challenge_game': challenge_game }
       let app_key = game === 'zzz' ? 'game_record_zzz' : game === 'sr' ? 'hkrpg_game_record' : ''
 
       res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })

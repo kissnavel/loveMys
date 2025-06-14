@@ -96,7 +96,29 @@ export default class apiTool {
             seed_time: new Date().getTime() + ''
           }
         }
-      })
+      }),
+      deviceLogin: {
+        url: 'https://bbs-api.miyoushe.com/apihub/api/deviceLogin',
+        body: {
+          app_version: '2.73.1',
+          device_id: data.deviceId,
+          device_name: `${deviceBrand}${modelName}`,
+          os_version: '33',
+          platform: 'Android',
+          registration_id: this.generateSeed(19)
+        }
+      },
+      saveDevice: {
+        url: 'https://bbs-api.miyoushe.com/apihub/api/saveDevice',
+        body: {
+          app_version: '2.73.1',
+          device_id: data.deviceId,
+          device_name: `${deviceBrand}${modelName}`,
+          os_version: '33',
+          platform: 'Android',
+          registration_id: this.generateSeed(19)
+        }
+      }
     }
   }
 

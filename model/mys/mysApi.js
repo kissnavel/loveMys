@@ -1,4 +1,5 @@
 import cfg from '../../../../lib/config/config.js'
+import getDeviceFp from '../getDeviceFp.js'
 import apiTool from './apiTool.js'
 import fetch from 'node-fetch'
 import md5 from 'md5'
@@ -87,19 +88,7 @@ export default class MysApi {
     const _uid = String(this.uid)
     const isSr = this.game == 'sr'
     const isZzz = this.game == 'zzz'
-    const isWd = this.game == 'wd'
-    if (isWd) {
-      switch (_uid.slice(0, -7)) {
-        case '11':
-          return 'cn_prod_bb01'// B服
-        case '21':
-          return 'cn_prod_mix01'// 渠道服(华为)
-        case '10':
-          return 'tw_prod_wd01'// 台服
-        case '20':
-          return 'glb_prod_wd01'// 国际服
-      }
-    } else if (isZzz) {
+    if (isZzz) {
       switch (_uid.slice(0, -8)) {
         case '10':
           return 'prod_gf_us'// 美服
@@ -129,7 +118,9 @@ export default class MysApi {
   }
 
   async getData (type, data = { headers: {} }, cached = false) {
+    const uid = this.uid
     const ck = this.cookie
+    const game = this.game
     const ltuid = ck.ltuid
     if (ltuid) {
       let bindInfo = await redis.get(`genshin:device_fp:${ltuid}:bind`)
@@ -150,10 +141,10 @@ export default class MysApi {
           bindInfo = null
         }
       }
-      const device_fp = await redis.get(`genshin:device_fp:${ltuid}:fp`)
-      if (device_fp) {
-        data.deviceFp = device_fp
-        data.headers['x-rpc-device_fp'] = device_fp
+      const { deviceFp } = await getDeviceFp.Fp(uid, ck, game)
+      if (deviceFp) {
+        data.deviceFp = deviceFp
+        data.headers['x-rpc-device_fp'] = deviceFp
       }
       const device_id = await redis.get(`genshin:device_fp:${ltuid}:id`)
       if (device_id) {
