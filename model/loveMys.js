@@ -39,7 +39,7 @@ export default class LoveMys {
     return res
   }
 
-  async geetest (e, data, retcode) {
+  async geetest (e, data, retcode = 1034) {
     let res
     let { uid, cookie, game } = data
     if (e?.game) game = e?.game
@@ -56,33 +56,57 @@ export default class LoveMys {
         return { data: null, message: '未知错误，可能为cookie失效', retcode: res?.retcode || 1034 }
       }
 
+      let type = Cfg.api.type
       let GtestType = Cfg.api.GtestType
-      if ([2, 1].includes(GtestType)) res = await vali.getData('recognize', res?.data)
-      if (res?.resultid) {
-        let results = res
-        let retry = 0
-        await common.sleep(5000)
-        res = await vali.getData('results', results)
-        while ((res?.status == 2) && retry < 10) {
+      if (type == 1) {
+        if ([2, 1].includes(GtestType)) res = await vali.getData('recognize', res?.data)
+        if (res?.resultid) {
+          let results = res
+          let retry = 0
           await common.sleep(5000)
           res = await vali.getData('results', results)
-          retry++
+          while ((res?.status == 2) && retry < 10) {
+            await common.sleep(5000)
+            res = await vali.getData('results', results)
+            retry++
+          }
+        }
+      } else if (type == 2) {
+        if ([2, 1].includes(GtestType)) res = await vali.getData('in', res?.data)
+        if (res?.request) {
+          let request = res
+          let retry = 0
+          await common.sleep(5000)
+          res = await vali.getData('res', request)
+          while ((res?.request == 'CAPCHA_NOT_READY') && retry < 10) {
+            await common.sleep(5000)
+            res = await vali.getData('res', request)
+            retry++
+          }
         }
       }
-      if (!res?.data?.validate && [2, 0].includes(GtestType)) {
-        if (GtestType === 2) res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })
-        res = await this.Manual_geetest(e, res?.data)
+      if (res?.data?.validate || res?.request?.geetest_validate) {
+        res = await vali.getData(retcode === 10035 ? 'verifyGeetest' : 'verifyVerification', {
+          ...res?.data ? res.data : res.request,
+          headers,
+          app_key
+        })
+      } else {
+        if ([2, 0].includes(GtestType)) {
+          if (GtestType === 2) res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })
+          res = await this.Manual_geetest(e, res?.data)
+          if (!res?.data?.validate || !res?.data?.geetest_validate) {
+            return { data: null, message: '验证码失败', retcode: 1034 }
+          }
+          res = await vali.getData(retcode === 10035 ? 'verifyGeetest' : 'verifyVerification', {
+            ...res.data,
+            headers,
+            app_key
+          })
+        } else {
+          return { data: null, message: '验证码失败', retcode: 1034 }
+        }
       }
-
-      if (!res?.data?.validate) {
-        return { data: null, message: '验证码失败', retcode: 1034 }
-      }
-
-      res = await vali.getData(retcode === 10035 ? 'verifyGeetest' : 'verifyVerification', {
-        ...res.data,
-        headers,
-        app_key
-      })
 
       if (res?.data?.challenge) return res
     } catch (error) {

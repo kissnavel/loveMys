@@ -39,9 +39,9 @@ export default class apiTool {
       verifyGeetest: {
         url: `${host}event/toolcomsrv/risk/verifyGeetest`,
         body: {
-          geetest_challenge: data.challenge,
-          geetest_validate: data.validate,
-          geetest_seccode: `${data.validate}|jordan`,
+          geetest_challenge: data.challenge || data.geetest_challenge,
+          geetest_validate: data.validate || data.geetest_validate,
+          geetest_seccode: `${data.validate || data.geetest_validate}|jordan`,
           app_key: data.app_key
         }
       },
@@ -52,9 +52,9 @@ export default class apiTool {
       verifyVerification: {
         url: `${hostRecord}game_record/app/card/wapi/verifyVerification`,
         body: {
-          geetest_challenge: data.challenge,
-          geetest_validate: data.validate,
-          geetest_seccode: `${data.validate}|jordan`
+          geetest_challenge: data.challenge || data.geetest_challenge,
+          geetest_validate: data.validate || data.geetest_validate,
+          geetest_seccode: `${data.validate || data.geetest_validate}|jordan`
         }
       },
       recognize: {
@@ -66,6 +66,14 @@ export default class apiTool {
         url: `${Cfg.api.resapi}`,
         config: `${Cfg.api.key}&resultid=${data.resultid}`,
         types: 'noheader'
+      },
+      in: {
+        url: `${Cfg.api.api}`,
+        query: `${Cfg.api.key}&${Cfg.api.query}&gt=${data.gt}&challenge=${data.challenge}`
+      },
+      res: {
+        url: `${Cfg.api.resapi}`,
+        query: `${Cfg.api.key}&${Cfg.api.resquery}&id=${data.request}`
       },
       /** fp参数用于减少验证码 */
       ...(/cn_|_cn/.test(this.server) ? {
