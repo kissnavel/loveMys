@@ -37,11 +37,11 @@ export function supportGuoba() {
         {
           field: 'api.type',
           label: '使用的平台',
-          bottomHelpMessage: '1：ttocr.com；2：2captcha.com',
+          bottomHelpMessage: '0：test_nine；1：ttocr.com；2：2captcha.com',
           component: 'InputNumber',
           required: true,
           componentProps: {
-            min: 1,
+            min: 0,
             max: 2,
             placeholder: '请输入类型',
           },
@@ -49,7 +49,7 @@ export function supportGuoba() {
         {
           field: 'api.api',
           label: '使用的api',
-          bottomHelpMessage: 'ttocr、2captcha必填',
+          bottomHelpMessage: 'test_nine、ttocr、2captcha必填',
           component: 'Input',
           componentProps: {
             placeholder: '例：https://api.example.com/recognize',

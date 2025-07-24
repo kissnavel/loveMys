@@ -58,11 +58,20 @@ export default class LoveMys {
 
       let type = Cfg.api.type
       let GtestType = Cfg.api.GtestType
-      if (type == 1) {
+      let test_nine = res
+      let retry = 0
+      if (type == 0) {
+        if ([2, 1].includes(GtestType)) res = await vali.getData('test_nine', res?.data)
+        if (res?.data?.validate) res = {
+          data: {
+            challenge: test_nine?.data?.challenge,
+            validate: res?.data?.validate
+          }
+        }
+      } else if (type == 1) {
         if ([2, 1].includes(GtestType)) res = await vali.getData('recognize', res?.data)
         if (res?.resultid) {
           let results = res
-          let retry = 0
           await common.sleep(5000)
           res = await vali.getData('results', results)
           while ((res?.status == 2) && retry < 10) {
@@ -75,7 +84,6 @@ export default class LoveMys {
         if ([2, 1].includes(GtestType)) res = await vali.getData('in', res?.data)
         if (res?.request) {
           let request = res
-          let retry = 0
           await common.sleep(5000)
           res = await vali.getData('res', request)
           while ((res?.request == 'CAPCHA_NOT_READY') && retry < 10) {

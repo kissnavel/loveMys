@@ -33,7 +33,15 @@ export class loveMysHandler extends plugin {
     }
 
     let apiCfg = Cfg.api
-    if ([1, 2].includes(apiCfg.GtestType) && (!apiCfg.api || !(apiCfg.token || apiCfg.query))) {
+    let apiCheck
+    if (apiCfg.type == 0) {
+      apiCheck = !apiCfg.api
+    } else if (apiCfg.type == 1) {
+      apiCheck = !apiCfg.api && !apiCfg.resapi && !apiCfg.key && !apiCfg.query
+    } else if (apiCfg.type == 2) {
+      apiCheck = !apiCfg.api && !apiCfg.resapi && !apiCfg.key && !apiCfg.query && !apiCfg.resquery
+    }
+    if ([1, 2].includes(apiCfg.GtestType) && apiCheck) {
       return reject('loveMys: 未正确填写配置文件[api.yaml]')
     }
 

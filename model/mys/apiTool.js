@@ -57,6 +57,10 @@ export default class apiTool {
           geetest_seccode: `${data.validate || data.geetest_validate}|jordan`
         }
       },
+      test_nine: {
+        url: `${Cfg.api.api}`,
+        query: `gt=${data.gt}&challenge=${data.challenge}`
+      },
       recognize: {
         url: `${Cfg.api.api}`,
         config: `${Cfg.api.key}&${Cfg.api.query}&gt=${data.gt}&challenge=${data.challenge}`,
