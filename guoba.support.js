@@ -136,6 +136,7 @@ export function supportGuoba() {
           component: 'InputNumber',
           required: true,
           componentProps: {
+            min: 0,
             max: 2,
             placeholder: '请输入类型',
           },
