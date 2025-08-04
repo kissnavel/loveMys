@@ -24,7 +24,7 @@ export default class GT_Manual {
     this.app.get('/GTest/validate/:key', this.get_validate)
     this.app.use(this.invalid)
     this.app.use(this.error)
-    logger.mark(`[loveMys]手动接口启动, ${this.cfg.Host}:${this.cfg.Port}/GTest/register`)
+    logger.mark(`[loveMys]手动接口启动, http://${this.cfg.Host}:${this.cfg.Port}/GTest/register`)
   }
 
   index (req, res, next) {
@@ -70,8 +70,8 @@ export default class GT_Manual {
     /** 未点击2分钟后删除 */
     setTimeout(() => delete tmp[key] && delete isRegister[key], 120000)
     GT_Manual.send(res, {
-      link: `${this.cfg.Host}:${this.cfg.Port}/GTest/${key}`,
-      result: `${this.cfg.Host}:${this.cfg.Port}/GTest/validate/${key}`
+      link: `${this.cfg.Address}/GTest/${key}`,
+      result: `${this.cfg.Address}/GTest/validate/${key}`
     })
   }
 

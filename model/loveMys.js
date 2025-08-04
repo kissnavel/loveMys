@@ -130,7 +130,7 @@ export default class LoveMys {
   async Manual_geetest (e, data) {
     if (!data.gt || !data.challenge || !e?.reply) return false
     let apiCfg = Cfg.getConfig('api')
-    if (!apiCfg.verifyAddr || (!apiCfg.startApi && !(apiCfg.Host || apiCfg.Port))) {
+    if (!apiCfg.verifyAddr || (!apiCfg.startApi && !(apiCfg.Host || apiCfg.Port || apiCfg.Address))) {
       return { data: null, message: '未正确填写配置文件[api.yaml]', retcode: 1034 }
     }
 

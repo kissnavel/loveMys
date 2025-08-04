@@ -103,11 +103,11 @@ export function supportGuoba() {
         },
         {
           field: 'api.Host',
-          label: '手动域名或ip',
-          bottomHelpMessage: '你的手动域名或ip',
+          label: '手动ip',
+          bottomHelpMessage: '你的手动ip',
           component: 'Input',
           componentProps: {
-            placeholder: '例: http://127.0.0.1',
+            placeholder: '例: 127.0.0.1',
           },
         },
         {
@@ -121,9 +121,18 @@ export function supportGuoba() {
           },
         },
         {
+          field: 'api.Address',
+          label: '手动地址',
+          bottomHelpMessage: '你的手动地址',
+          component: 'Input',
+          componentProps: {
+            placeholder: '例: http://127.0.0.1:3000',
+          },
+        },
+        {
           field: 'api.verifyAddr',
           label: '手动api',
-          bottomHelpMessage: '使用他人的手动api请修改(使用自己的api请保持端口一致)',
+          bottomHelpMessage: '使用他人的手动api请修改(使用自己的api请保持ip、端口一致)',
           component: 'Input',
           componentProps: {
             placeholder: '例: http://127.0.0.1:3000/GTest/register',
