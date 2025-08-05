@@ -146,7 +146,7 @@ export default class LoveMys {
     res = await res.json()
     if (!res.data) return false
 
-    await e.reply(`请打开地址并完成验证\n${res.data.link}`, true)
+    await e.reply(`请复制地址并用手机浏览器打开完成验证\n${res.data.link}`, true)
 
     for (let i = 0; i < 80; i++) {
       let validate = await (await fetch(res.data.result)).json()

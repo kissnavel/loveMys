@@ -5,7 +5,7 @@ import _ from 'lodash'
 let tmp = {}
 let isRegister = {}
 let result = {}
-const Path = `${process.cwd()}/plugins/loveMys-plugin/model/GT-Manual/`
+const Path = 'https://img-hut.top/gt/'
 export default class GT_Manual {
   constructor() {
     this.cfg = Cfg.api
@@ -36,7 +36,7 @@ export default class GT_Manual {
     <title>GTest</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="${Path}style.css">
   </head>
   <body>
     <h1></h1><br>
@@ -47,7 +47,7 @@ export default class GT_Manual {
       </div>
     </div>
     <footer id="footer">
-      <p class="copyright">Copyright Miao-Yunzai</p>
+      <p class="copyright">Copyright GT-Manual</p>
     </footer>
     <script src="${Path}jquery.min.js"></script>
     <script src="${Path}gt.js"></script>
@@ -70,8 +70,8 @@ export default class GT_Manual {
     /** 未点击2分钟后删除 */
     setTimeout(() => delete tmp[key] && delete isRegister[key], 120000)
     GT_Manual.send(res, {
-      link: `${this.cfg.Address}/GTest/${key}`,
-      result: `${this.cfg.Address}/GTest/validate/${key}`
+      link: `${Cfg.api.Address}/GTest/${key}`,
+      result: `${Cfg.api.Address}/GTest/validate/${key}`
     })
   }
 
