@@ -123,7 +123,7 @@ export function supportGuoba() {
         {
           field: 'api.Address',
           label: '手动地址',
-          bottomHelpMessage: '你的手动地址',
+          bottomHelpMessage: '你的手动地址(反向代理需要，不使用反向代理请保持ip、端口一致)',
           component: 'Input',
           componentProps: {
             placeholder: '例: http://127.0.0.1:3000',
@@ -132,7 +132,7 @@ export function supportGuoba() {
         {
           field: 'api.verifyAddr',
           label: '手动api',
-          bottomHelpMessage: '使用他人的手动api请修改(使用自己的api请保持ip、端口一致)',
+          bottomHelpMessage: '使用他人的手动api请修改(使用自己的手动api请保持ip、端口一致)',
           component: 'Input',
           componentProps: {
             placeholder: '例: http://127.0.0.1:3000/GTest/register',
