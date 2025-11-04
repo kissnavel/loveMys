@@ -8,7 +8,7 @@ pnpm install --filter=loveMys-plugin
 ```
 
 ## 使用的平台
-0：test_nine(作者提供的模型目前仅能过gs)；1：ttocr.com；2：2captcha.com
+0：test_nine；1：ttocr.com；2：2captcha.com
 
 ## 使用插件
 重启后在 config/api.yaml中按照平台文档填入type、api、resapi、key、query、resquery
