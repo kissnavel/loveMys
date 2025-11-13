@@ -13,7 +13,7 @@ export default class LoveMys {
 
       res = await this.geetest(e, mysApi, res?.retcode)
       if (!res?.data?.challenge) {
-        return { data: null, message: '验证码失败', retcode: 1034 }
+        return { data: null, message: '验证码失败', retcode: res?.retcode }
       }
 
       if (data?.headers) {
@@ -30,11 +30,11 @@ export default class LoveMys {
       res = await mysApi.getData(type, data)
 
       if (!(res?.retcode === 0 || (type == 'detail' && res?.retcode === -1002))) {
-        return { data: null, message: '验证码失败', retcode: res.retcode || 1034 }
+        return { data: null, message: '验证码失败', retcode: res?.retcode }
       }
     } catch (error) {
       logger.error(error)
-      return { data: null, message: '出错了', retcode: 1034 }
+      return { data: null, message: '出错了', retcode: res?.retcode }
     }
     return res
   }
@@ -53,7 +53,7 @@ export default class LoveMys {
 
       res = await vali.getData(retcode === 10035 ? 'createGeetest' : 'createVerification', { headers, app_key })
       if (!res || res?.retcode !== 0) {
-        return { data: null, message: '未知错误，可能为cookie失效', retcode: res?.retcode || 1034 }
+        return { data: null, message: '未知错误，可能为cookie失效', retcode: 10103 }
       }
 
       let type = Cfg.api.type
@@ -110,10 +110,10 @@ export default class LoveMys {
               app_key
             })
           } else {
-            return { data: null, message: '验证码失败', retcode: 1034 }
+            return { data: null, message: '验证码失败', retcode: retcode }
           }
         } else {
-          return { data: null, message: '验证码失败', retcode: 1034 }
+          return { data: null, message: '验证码失败', retcode: retcode }
         }
       }
 
@@ -121,7 +121,7 @@ export default class LoveMys {
     } catch (error) {
       logger.error(error)
     }
-    return { data: null, message: '验证码失败', retcode: 1034 }
+    return { data: null, message: '验证码失败', retcode: retcode }
   }
 
   /**
@@ -131,7 +131,7 @@ export default class LoveMys {
     if (!data.gt || !data.challenge || !e?.reply) return false
     let apiCfg = Cfg.getConfig('api')
     if (!apiCfg.verifyAddr || (!apiCfg.startApi && !(apiCfg.Host || apiCfg.Port || apiCfg.Address))) {
-      return { data: null, message: '未正确填写配置文件[api.yaml]', retcode: 1034 }
+      return { data: null, message: '未正确填写配置文件[api.yaml]', retcode: null }
     }
 
     let res = await fetch(`${apiCfg.verifyAddr}`, {
