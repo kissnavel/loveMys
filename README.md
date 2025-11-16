@@ -1,5 +1,10 @@
 # loveMys(Miao-Yunzai & TRSS-Yunzai)
 
+## 停更说明
+1、本仓库全部功能已整合至：“<a href="https://github.com/kissnavel/genshin">genshin</a>”仓库，推荐使用此仓库。
+
+2、本仓库将暂停更新，修复致命错误除外。
+
 ## 安装插件
 在云崽根目录下打开终端，运行：
 ``` bash
